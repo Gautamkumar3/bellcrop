@@ -10,7 +10,6 @@ const complaintSchema = mongoose.Schema({
   email: {
     type: String,
     required: [true, "email is missing"],
-    unique: true,
     validate: [validator.isEmail, "Please enter valid email address"],
   },
   topic: { type: String, required: [true, "Topic is missing"] },
