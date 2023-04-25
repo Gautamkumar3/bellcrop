@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const getComplaintDetails = async (token, id) => {
-  let res = await axios.get(`http://localhost:8080/complaint/${id}`, {
-    headers: { token: token },
-  });
+  let res = await axios.get(
+    `https://bellcrop-api-production.up.railway.app/complaint/${id}`,
+    {
+      headers: { token: token },
+    }
+  );
   return res.data;
 };
 

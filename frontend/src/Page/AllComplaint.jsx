@@ -16,9 +16,12 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const getAllComplaint = async (token) => {
-  let res = await axios.get("http://localhost:8080/complaint", {
-    headers: { token: token },
-  });
+  let res = await axios.get(
+    "https://bellcrop-api-production.up.railway.app/complaint",
+    {
+      headers: { token: token },
+    }
+  );
   return res.data;
 };
 
@@ -34,7 +37,7 @@ const AllComplaint = () => {
   }, []);
 
   return (
-    <Box>
+    <Box w="80%" m="auto">
       <TableContainer>
         <Table variant="striped">
           <Thead height={"60px"}>

@@ -31,7 +31,10 @@ const ComplaintForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:8080/complaint/create", data)
+      .post(
+        "https://bellcrop-api-production.up.railway.app/complaint/create",
+        data
+      )
       .then((res) => {
         toast({
           title: `Status code ${res.status}`,
