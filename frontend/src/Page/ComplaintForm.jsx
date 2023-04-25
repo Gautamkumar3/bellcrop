@@ -11,10 +11,14 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 
-const Login = () => {
+const ComplaintForm = () => {
   const [data, setData] = useState({
+    details: "",
+    created_by: "",
     email: "",
-    password: "",
+    topic: "",
+    category: "",
+    img: "",
   });
   const toast = useToast();
   const navigate = useNavigate();
@@ -26,9 +30,8 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await axios
-      .post("http://localhost:8080/user/login", data)
+      .post("http://localhost:8080/complaint/create", data)
       .then((res) => {
         toast({
           title: `Status code ${res.status}`,
@@ -38,9 +41,6 @@ const Login = () => {
           isClosable: true,
           position: "top",
         });
-
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        navigate("/");
       })
       .catch((er) => {
         toast({
@@ -65,26 +65,55 @@ const Login = () => {
       mt={"5%"}
     >
       <Heading textAlign={"center"} color={"tomato"} mb={5}>
-        Login Form
+        Complaint Form
       </Heading>
       <form onSubmit={handleSubmit}>
         <FormControl isRequired>
+          <FormLabel mt={2}>Details</FormLabel>
+          <Input
+            type={"text"}
+            placeholder="details"
+            name="details"
+            onChange={handleChange}
+          />
+          <FormLabel mt={2}>Created By</FormLabel>
+          <Input
+            type={"text"}
+            placeholder="created by"
+            name="created_by"
+            onChange={handleChange}
+          />
           <FormLabel mt={2}>Email</FormLabel>
           <Input
             type={"email"}
-            placeholder="email"
             name="email"
+            placeholder="email"
             onChange={handleChange}
           />
-          <FormLabel mt={2}>Password</FormLabel>
+          <FormLabel mt={2}>Topic</FormLabel>
           <Input
-            type={"password"}
-            name="password"
-            placeholder="password"
+            type={"text"}
+            name="topic"
+            placeholder="topic"
+            onChange={handleChange}
+          />
+
+          <FormLabel mt={2}>Category</FormLabel>
+          <Input
+            type={"text"}
+            name="category"
+            placeholder="category"
+            onChange={handleChange}
+          />
+          <FormLabel mt={2}>Image URL</FormLabel>
+          <Input
+            type={"text"}
+            name="img"
+            placeholder="image url"
             onChange={handleChange}
           />
           <Button mt={3} type="submit" colorScheme={"whatsapp"} w="full">
-            Login
+            Create complaint
           </Button>
         </FormControl>
       </form>
@@ -92,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ComplaintForm;

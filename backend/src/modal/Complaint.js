@@ -14,7 +14,11 @@ const complaintSchema = mongoose.Schema({
   },
   topic: { type: String, required: [true, "Topic is missing"] },
   category: { type: String, required: true },
-  img: { type: String },
+  img: {
+    type: String,
+    default:
+      "https://images.pexels.com/photos/923681/pexels-photo-923681.jpeg?auto=compress&cs=tinysrgb&w=600",
+  },
 });
 
 const Complaint = mongoose.model("complaint", complaintSchema);
