@@ -8,8 +8,8 @@ const transport = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "techcart341998@gmail.com",
-    pass: "umkfyuwljsqyoruc",
+    user: "gksingh341998@gmail.com",
+    pass: "afaoqauzbohhdxov",
   },
 });
 
@@ -17,7 +17,7 @@ const sendMail = (name, email, password) => {
   transport
     .sendMail({
       to: email,
-      from: "techcart341998@gmail.com",
+      from: "gksingh341998@gmail.com",
       subject: "Legal Notice",
       html: `<p>Dear Sir</p>
            
@@ -45,12 +45,13 @@ const createComplaint = async (req, res) => {
   try {
     const newComplaint = new complaintModal({ ...req.body });
     await newComplaint.save();
-    sendMail(req.body.created_by, req.body.email, password);
+
     const existUser = await UserModal.findOne({ email: req.body.email });
 
     if (!existUser) {
       const user = new UserModal({ email: req.body.email, password });
       await user.save();
+      sendMail(req.body.created_by, req.body.email, password);
     }
 
     return res.status(200).send({
@@ -76,7 +77,23 @@ const getComplaint = async (req, res) => {
   }
 };
 
+const getComplaintDetails = async (req, res) => {
+  let { id } = req.params;
+
+  try {
+    let complaint = await complaintModal.findById(id);
+    return res.status(200).send({
+      status: "success",
+      message: "Complaints get successfully",
+      data: complaint,
+    });
+  } catch (er) {
+    return res.status(500).send({ status: "error", message: er.message });
+  }
+};
+
 module.exports = {
   createComplaint,
   getComplaint,
+  getComplaintDetails,
 };
